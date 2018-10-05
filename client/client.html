@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Arara</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+
+    //function to parse our response
+    const parseJSON = (xhr, content) => {
+      //parse response (obj will be empty in a 204 updated)
+      const obj = JSON.parse(xhr.response);
+      console.dir(obj);
+
+      //if users in response, add to screen
+      if(obj.user && obj.message) {
+        const newMessage = document.createElement('p');
+        const user = JSON.stringify(obj.user);
+        const message = JSON.stringify(obj.message);
+        const timeStamp = JSON.stringify(obj.timeStamp);
+        newMessage.textContent = user + "(" + timeStamp + "): " + message;
+        document.querySelector('#messageBoard').appendChild(newMessage);
+      }
+    };
+
+    const handleResponse = (xhr, parseResponse) => {
+      const content = document.querySelector('#content');
+      
+      switch(xhr.status) {
+          case 200:
+            break;
+          case 201:
+            break;
+          case 204:
+            break;
+          case 400:
+            break;
+          case 404:
+            break;
+          case 500:
+            break;
+          default:
+            break;  
+        }
+      //if we are expecting a response body (not in a head request)
+      if (parseResponse) {
+          parseJSON(xhr, content);
+      }
+    };
+
+    const requestUpdate = (e, url) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.setRequestHeader('Accept', type);
+        xhr.onload = () => handleResponse(xhr);
+        xhr.send();
+        e.preventDefault();
+        return false;
+    };
+    
+    const sendPost = (e, messageForm) => {
+        const messageAction = messageForm.getAttribute('action');
+        const messageMethod = messageForm.getAttribute('method');
+        
+        const nameField = messageForm.querySelector("#username");
+        const messageField = messageForm.querySelector("#message");
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open(messageMethod, messageAction);
+        
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Accept', 'application/json');
+        
+        xhr.onload = () => handleResponse(xhr, true);
+        
+        const formData = `user=${nameField.value}&message=${messageField.value}`;
+        xhr.send(formData);
+        
+        e.preventDefault();
+        return false;
+    };
+
+    const init = () => {
+        const messageForm = document.querySelector('#messageForm');
+        const sendMessage = (e) => sendPost(e, messageForm);
+        messageForm.addEventListener('submit', sendMessage);
+    };
+
+    window.onload = init;
+
+  </script>
+</head>
+<body>
+  <section id="top">
+    <h3>Arara</h3>
+    <form id="messageForm" action="/sendMessage" method="post">
+        Username: <input type="text" id=username></input><br><br>
+        Message: <input type="text" id=message></input><br><br>
+        <button id="send">Send</button><br><br>
+    </form>
+  </section>
+  <section id="content">
+      <body id="messageBoard">
+      </body>
+  </section>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "arara",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.9.0",
+    "npm": "6.2.0"
+  },
+  "description": "Project 1 for Rich Media II. A messaging api",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hansooRIT/Arara.git"
+  },
+  "author": "HanSoo Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hansooRIT/Arara/issues"
+  },
+  "homepage": "https://github.com/hansooRIT/Arara#readme",
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
