@@ -20,6 +20,7 @@ var addToMessageBoard = function addToMessageBoard(obj) {
     messageBoard.appendChild(messageInfo);
     messageBoard.appendChild(newMessage);
     messageBoard.appendChild(document.createElement('hr'));
+    document.querySelector("#content").scrollTop = document.querySelector("#content").scrollHeight;
 };
 
 //function to parse our response
@@ -42,41 +43,53 @@ var update = function update(url) {
     return false;
 };
 
+//Function that clears the screen of all messages, then repopulates them based 
+//on the contents of the xhr.
 var updateScreen = function updateScreen(xhr, content) {
     var obj = JSON.parse(xhr.response);
     var messageBoard = document.querySelector(".messageBoard");
+    //Clears message board of all old messages.
     while (messageBoard.hasChildNodes()) {
         messageBoard.removeChild(messageBoard.firstChild);
     }
+    //If the user is using the search functionality...
     if (isSearching) {
+        //If the search yielded no matches
         if (obj.messageLog.length == 0) {
+            //Create a singular message stating that nothing matched the value.
             var messageInfo = document.createElement('p');
             messageInfo.textContent = "No matching results for search term";
             var _messageBoard = document.querySelector(".messageBoard");
             _messageBoard.appendChild(messageInfo);
-        } else {
-            for (var i = 0; i < obj.messageLog.length; i++) {
-                addToMessageBoard(obj.messageLog[i]);
+        }
+        //Otherwise, populate the message baord with the filtered messages.
+        else {
+                for (var i = 0; i < obj.messageLog.length; i++) {
+                    addToMessageBoard(obj.messageLog[i]);
+                }
+            }
+    }
+    //Otherwise...
+    else {
+            //Populate the message board from messages from the chatroom the user is currently in.
+            switch (currentRoom) {
+                case "Room1":
+                    for (var i = 0; i < obj.messages.Room1.messageLog.length; i++) {
+                        addToMessageBoard(obj.messages.Room1.messageLog[i]);
+                    }break;
+                case "Room2":
+                    for (var i = 0; i < obj.messages.Room2.messageLog.length; i++) {
+                        addToMessageBoard(obj.messages.Room2.messageLog[i]);
+                    }break;
+                case "Room3":
+                    for (var i = 0; i < obj.messages.Room3.messageLog.length; i++) {
+                        addToMessageBoard(obj.messages.Room3.messageLog[i]);
+                    }break;
             }
         }
-    } else {
-        switch (currentRoom) {
-            case "Room1":
-                for (var i = 0; i < obj.messages.Room1.messageLog.length; i++) {
-                    addToMessageBoard(obj.messages.Room1.messageLog[i]);
-                }break;
-            case "Room2":
-                for (var i = 0; i < obj.messages.Room2.messageLog.length; i++) {
-                    addToMessageBoard(obj.messages.Room2.messageLog[i]);
-                }break;
-            case "Room3":
-                for (var i = 0; i < obj.messages.Room3.messageLog.length; i++) {
-                    addToMessageBoard(obj.messages.Room3.messageLog[i]);
-                }break;
-        }
-    }
 };
 
+//Helper function that redirects to different functions depending on the received status code.
 var handleResponse = function handleResponse(xhr, parseResponse) {
     var content = document.querySelector('#content');
     var response = {};
@@ -85,6 +98,7 @@ var handleResponse = function handleResponse(xhr, parseResponse) {
     }
     switch (xhr.status) {
         case 200:
+            //The request was a success, so update the screen with whatever was done. 
             updateScreen(xhr, content);
             break;
         case 201:
@@ -94,9 +108,12 @@ var handleResponse = function handleResponse(xhr, parseResponse) {
             }
             break;
         case 204:
+            //Only case for a 204 is if a user changes their username.
+            //Alerts the user that all of their previous messages will be updated.
             window.alert("Changed username. Updating previous messages in room");
             break;
         case 400:
+            //Alerts the user of what they messed up with.
             if (response.id == "missingParams") {
                 window.alert(response.message);
             }
@@ -172,7 +189,7 @@ var changeUsername = function changeUsername(e) {
         return handleResponse(xhr, false);
     };
 
-    var formData = "oldUser=" + localUsername + "&newUser=" + nameField.value + "&room=" + currentRoom;
+    var formData = "oldUser=" + localUsername + "&newUser=" + nameField.value;
     xhr.send(formData);
 
     localUsername = nameField.value;
@@ -223,6 +240,7 @@ var init = function init() {
                 updateInterval = setInterval(update, 1000, '/getMessages');
             }
             sendPost(e, messageForm);
+            messageForm.querySelector("#message").value = "";
             //If this user changed their username, update all of their previous messages to have the new username.
             if (localUsername !== messageForm.querySelector("#username").value && localUsername !== "") {
                 changeUsername(e);

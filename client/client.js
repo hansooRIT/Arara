@@ -18,6 +18,7 @@ const addToMessageBoard = (obj) => {
     messageBoard.appendChild(messageInfo);
     messageBoard.appendChild(newMessage);
     messageBoard.appendChild(document.createElement('hr'));
+    document.querySelector("#content").scrollTop = document.querySelector("#content").scrollHeight;
 }
 
 //function to parse our response
@@ -222,6 +223,7 @@ const init = () => {
                 updateInterval = setInterval(update, 1000, '/getMessages');
             }
             sendPost(e, messageForm);
+            messageForm.querySelector("#message").value = "";
             //If this user changed their username, update all of their previous messages to have the new username.
             if (localUsername !== messageForm.querySelector("#username").value && localUsername !== "") {
                 changeUsername(e);
