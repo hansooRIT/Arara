@@ -27,6 +27,46 @@ const handlePost = (request, response, parsedUrl) => {
       responseHandler.sendMessage(request, response, bodyParams);
     });
   }
+  else if (parsedUrl.pathname === '/updateUser') {
+    const body = [];
+
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      responseHandler.updateUser(request, response, bodyParams);
+    });
+  }
+  else if (parsedUrl.pathname === '/filterMessages') {
+    const body = [];
+
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      responseHandler.filterMessages(request, response, bodyParams);
+    });
+  }
 };
 
 const handleGet = (request, response, parsedUrl) => {
@@ -42,6 +82,12 @@ const handleGet = (request, response, parsedUrl) => {
       break;
     case '/style.css':
       htmlHandler.getCSS(request, response);
+      break;
+    case '/bundle.js':
+      htmlHandler.getJS(request, response);
+      break;
+    case '/tempicon.png':
+      htmlHandler.getIcon(request, response); 
       break;
     default:
       responseHandler.notFound(request, response);
@@ -62,7 +108,6 @@ const handleHead = (request, response, parsedUrl) => {
       break;
   }
 };
-
 
 // function to handle requests
 const onRequest = (request, response) => {

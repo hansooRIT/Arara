@@ -1,0 +1,157 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Niramit', sans-serif;
+}
+
+#top {
+  width: 80%;
+  text-align: left;
+  margin: 0 auto;
+  float: right;
+}
+
+#top hr {
+   border-color: black;
+}
+
+#roomName {
+  margin-left: 5px;
+}
+
+#description {
+  margin-left: 5px;
+}
+
+#searchMenu {
+    right: 2%;
+    top: 2%;
+    width: 100%;
+    text-align: right;
+    float: right;
+    position: absolute;
+}
+
+input[type=text] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#content {
+  width: 80%;
+  height: 75%;
+  font-size: 17px;
+  text-align: left;
+  float: right;
+  overflow-y: auto;
+}
+
+.messageBoard p {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.messageBoard div {
+    font-size: 15px;
+    text-align: left;
+    padding-left: 5px;
+    word-wrap: break-word; 
+}
+
+.messageBoard hr {
+    width: 98%;
+}
+
+.rooms {
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+    font-family: 'Kodchasan', sans-serif;
+    color: aliceblue;
+}
+
+.rooms #title {
+    width: 47%;
+    text-align: left;
+    margin-right: 0px;
+    padding-bottom: 8px;
+    font-size: 27px;
+}
+
+.rooms #description {
+    font-size: 15px;
+    float: left;
+    width: 47%;
+    margin-right: 0;
+}
+
+.rooms img {
+    display: inline;
+    height: 120px;
+    width: 120px;
+    border-radius: 9px;
+    border-color: aquamarine;
+    padding-bottom: 15px;
+}
+
+.rooms a {
+    font-family: 'Niramit', sans-serif;
+    padding: 8px 20px 8px 20px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.rooms a:hover {
+    cursor: pointer;
+    color:  #f1f1f1;
+    background-color: #a1a1a1;
+}
+
+.userInput {
+    width: 80%;
+    float: right;
+    font: 'Niramit', sans-serif;
+}
+
+.userInput hr { 
+    border-color: black;
+}
+
+.userInput #username {
+    float: none;
+    position: fixed;
+    bottom: 10%;
+    right: 59%;
+    height: 2%;
+    width: 20%;
+}
+
+.userInput #usernameLabel {
+    float: none;
+    position: fixed;
+    bottom: 11%;
+    right: 59%;
+    height: 2%;
+    width: 20%;
+}
+
+.userInput #message {
+    float: none;
+    position: fixed;
+    bottom: 3%;
+    right: 4%;
+    height: 5%;
+    width: 75%;
+}

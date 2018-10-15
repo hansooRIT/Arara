@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Arara</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Kodchasan|Niramit" rel="stylesheet">
+  <script src="/bundle.js"></script>
+</head>
+<body>
+  <section id="top">
+    <h3 id="roomName">Room 1</h3>
+    <hr>
+  </section>
+  <section id="searchMenu">
+      <form id="search" action="/filterMessages" method="post">
+          <select id="searchType">
+              <option value="byMessage">Message Content</option>
+              <option value="byUser">User</option>
+              <option value="byDate">Date</option>
+          </select>
+          <input type="text" id=searchField></input>
+          <input type="submit" value="Search"/>
+      </form>  
+  </section>
+  <div class="rooms">
+      <div id="title">Arara</div>
+      <div id="description">For all of your online babbling needs.</div>
+      <img src="/tempicon.png"/>
+      <form id="roomSelect" action="/getMessages" method="get">
+          <a id="Room1">Room 1</a>
+          <a id="Room2">Room 2</a>
+          <a id="Room3">Room 3</a>
+      </form>
+  </div>
+  <section id="content">
+      <div class="messageBoard"></div>
+  </section>
+  <section class="userInput">
+      <hr>
+      <form id="messageForm" action="/sendMessage" method="post">
+          <p id="usernameLabel">Username</p>
+          <input type="text" id=username></input>
+          <input type="text" id=message placeholder="Press enter to send your message."></input>
+      </form>
+  </section>
+</body>
+</html>
