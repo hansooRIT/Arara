@@ -26,8 +26,7 @@ const handlePost = (request, response, parsedUrl) => {
 
       responseHandler.sendMessage(request, response, bodyParams);
     });
-  }
-  else if (parsedUrl.pathname === '/updateUser') {
+  } else if (parsedUrl.pathname === '/updateUser') {
     const body = [];
 
     request.on('error', (err) => {
@@ -46,8 +45,7 @@ const handlePost = (request, response, parsedUrl) => {
 
       responseHandler.updateUser(request, response, bodyParams);
     });
-  }
-  else if (parsedUrl.pathname === '/filterMessages') {
+  } else if (parsedUrl.pathname === '/filterMessages') {
     const body = [];
 
     request.on('error', (err) => {
@@ -87,7 +85,7 @@ const handleGet = (request, response, parsedUrl) => {
       htmlHandler.getJS(request, response);
       break;
     case '/tempicon.png':
-      htmlHandler.getIcon(request, response); 
+      htmlHandler.getIcon(request, response);
       break;
     default:
       responseHandler.notFound(request, response);
