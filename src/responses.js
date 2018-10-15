@@ -106,14 +106,24 @@ const updateUser = (request, response, body) => {
     
     const responseCode = 204;
     
-    if (!body.oldUser || !body.newUser || !body.room) {
+    if (!body.oldUser || !body.newUser) {
         responseJSON.id = 'missingParams';
         return respondJSON(request, response, 400, responseJSON);
     }
     
-    for (var i = 0; i < messages[body.room].messageLog.length; i++) {
-        if (messages[body.room].messageLog[i].user == body.oldUser) {
-            messages[body.room].messageLog[i].user = body.newUser;
+    for (var i = 0; i < messages["Room1"].messageLog.length; i++) {
+        if (messages["Room1"].messageLog[i].user == body.oldUser) {
+            messages["Room1"].messageLog[i].user = body.newUser;
+        }
+    }
+    for (var i = 0; i < messages["Room2"].messageLog.length; i++) {
+        if (messages["Room2"].messageLog[i].user == body.oldUser) {
+            messages["Room2"].messageLog[i].user = body.newUser;
+        }
+    }
+    for (var i = 0; i < messages["Room3"].messageLog.length; i++) {
+        if (messages["Room3"].messageLog[i].user == body.oldUser) {
+            messages["Room3"].messageLog[i].user = body.newUser;
         }
     }
     return respondJSONMeta(request, response, responseCode);

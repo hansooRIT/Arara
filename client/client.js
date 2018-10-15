@@ -173,7 +173,7 @@ const changeUsername = (e) => {
 
     xhr.onload = () => handleResponse(xhr, false);
 
-    const formData = `oldUser=${localUsername}&newUser=${nameField.value}&room=${currentRoom}`;
+    const formData = `oldUser=${localUsername}&newUser=${nameField.value}`;
     xhr.send(formData);
 
     localUsername = nameField.value;
